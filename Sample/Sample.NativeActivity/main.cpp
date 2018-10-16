@@ -250,6 +250,7 @@ void android_main(struct android_app* state)
 
     CBluetooth blu(engine.app->activity->vm);
     std::string strName = blu.GetAdapterName();
+    bool bIsEnabled = blu.IsEnabled();
 
 
     // Prepare to monitor accelerometer

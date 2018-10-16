@@ -9,6 +9,9 @@ public:
 
     ~CBluetooth();
 
+
+    bool IsEnabled();
+
     std::string GetAdapterName();
 
 protected:
@@ -18,6 +21,7 @@ protected:
     jclass m_classBta;
     jmethodID m_fnGetDefaultAdapter;
     jmethodID m_fnGetName;
+    jmethodID m_fnIsEnabled;
 
 };
 

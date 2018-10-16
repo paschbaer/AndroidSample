@@ -1,7 +1,7 @@
 #include "Bluetooth.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-CBluetooth::CBluetooth(JavaVM* pVm) : m_pVm(pVm), m_env(NULL), m_classBta(NULL), m_fnGetDefaultAdapter(NULL), m_fnGetName(NULL)
+CBluetooth::CBluetooth(JavaVM* pVm) : m_pVm(pVm), m_env(NULL), m_classBta(NULL), m_fnGetDefaultAdapter(NULL), m_fnGetName(NULL), m_fnIsEnabled(NULL)
 {
     if (pVm)
     {
@@ -13,6 +13,7 @@ CBluetooth::CBluetooth(JavaVM* pVm) : m_pVm(pVm), m_env(NULL), m_classBta(NULL),
             {
                 m_fnGetDefaultAdapter = m_env->GetStaticMethodID(m_classBta, "getDefaultAdapter", "()Landroid/bluetooth/BluetoothAdapter;");
                 m_fnGetName = m_env->GetMethodID(m_classBta, "getName", "()Ljava/lang/String;");
+                m_fnIsEnabled = m_env->GetMethodID(m_classBta, "isEnabled", "()Z");
             }
         }
 
@@ -37,6 +38,19 @@ CBluetooth::~CBluetooth()
             m_env = NULL;
         }
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+bool CBluetooth::IsEnabled()
+{
+    bool bRet = false;
+    if (m_fnIsEnabled)
+    {
+        jboolean jbRet = (jboolean)m_env->CallBooleanMethod(m_classBta, m_fnIsEnabled); //TODO: class loader is missing
+        bRet = (bool)jbRet;
+    }
+
+    return bRet;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
