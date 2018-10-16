@@ -17,6 +17,7 @@
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "AndroidProject1.NativeActivity", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "AndroidProject1.NativeActivity", __VA_ARGS__))
+#include "Bluetooth.h"
 
 /**
 * Our saved state data.
@@ -242,6 +243,14 @@ void android_main(struct android_app* state)
     state->onAppCmd = engine_handle_cmd;
     state->onInputEvent = engine_handle_input;
     engine.app = state;
+
+    //prepare bluetooth
+    if (!engine.app || !engine.app->activity || !engine.app->activity->env)
+        return;
+
+    CBluetooth blu(engine.app->activity->vm);
+    std::string strName = blu.GetAdapterName();
+
 
     // Prepare to monitor accelerometer
     engine.sensorManager = ASensorManager_getInstance();
