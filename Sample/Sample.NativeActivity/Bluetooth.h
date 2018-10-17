@@ -19,6 +19,7 @@ protected:
     JavaVM* m_pVm;
     JNIEnv* m_env;
     jclass m_classBta;
+    jobject m_objBta;
     jmethodID m_fnGetDefaultAdapter;
     jmethodID m_fnGetName;
     jmethodID m_fnIsEnabled;
