@@ -25,7 +25,7 @@ CBluetooth::CBluetooth(JavaVM* pVm) : m_pVm(pVm), m_env(NULL), m_classBta(NULL),
 ////////////////////////////////////////////////////////////////////////////////
 CBluetooth::~CBluetooth()
 {
-%    if (m_pVm)
+    if (m_pVm)
     {
         if (m_env)
         {
